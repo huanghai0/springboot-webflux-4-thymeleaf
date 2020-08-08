@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>用户列表</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+
+<div class="contentDiv">
+
+
+    <table class="table table-hover table-condensed">
+        <legend>
+            <strong>用户列表</strong>
+        </legend>
+        <thead>
+        <tr>
+            <th>用户编号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>手机号</th>
+            <th>密码</th>
+            <th>会员</th>
+            <th>删除用户</th>
+            <th>更新用户</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <th scope="row" th:text="${user.id}"></th>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.sex}"></td>
+            <td th:text="${user.phone}"></td>
+            <td th:text="${user.pwd}"></td>
+            <td th:text="${user.vid}"></td>
+            <td><a class="btn btn-danger" th:href="@{user/delete/{userPhone}(userPhone=${user.phone})}">删除</a>
+            <td><a class="btn btn-danger" th:href="@{user/update/{userPhone}(userPhone=${user.phone})}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div><a class="btn btn-primary" href="user/create" role="button">新增用户</a></div>
+</div>
+
+</body>
+</html>

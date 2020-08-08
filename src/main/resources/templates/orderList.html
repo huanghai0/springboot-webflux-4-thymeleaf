@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>用户列表</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+
+<div class="contentDiv">
+
+    <table class="table table-hover table-condensed">
+        <legend>
+            <strong>订单列表</strong>
+        </legend>
+        <thead>
+        <tr>
+            <th>订单编号</th>
+            <th>订单时间</th>
+            <th>预定日期</th>
+            <th>用户手机号</th>
+            <th>修理编号</th>
+            <th>汽车编号</th>
+            <th>是否付费</th>
+            <th>订单删除</th>
+            <th>订单修改</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderList}">
+            <th scope="row" th:text="${order.oid}"></th>
+            <td th:text="${order.otime}"></td>
+            <td th:text="${order.odate}"></td>
+            <td th:text="${order.ophone}"></td>
+            <td th:text="${order.opid}"></td>
+            <td th:text="${order.ocid}"></td>
+            <td th:text="${order.ostat}"></td>
+            <td><a class="btn btn-danger" th:href="@{order/delete/{oid}(oid=${order.oid})}">删除</a>
+            <td><a class="btn btn-danger" th:href="@{order/update/{oid}(oid=${order.oid})}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>系统首页</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="/js/jquery.1.12.4.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/echarts-gl.min.js"></script>
+
+</head>
+<body>
+<div th:include="bar"></div>
+<br>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-6 column">
+            <div id="myDiv2" style="height: 400px;width: 600px "></div>
+        </div>
+                <div class="col-md-6 column">
+                    <div id="myDiv3"  style="height: 400px;width: 600px "></div>
+                </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    <!--这个是折现图-->
+    function loadData(option) {
+        $.ajax({
+            type: 'post',	//传输类型
+            async: false,	//同步执行
+            url: '/index/sumorder',	//web.xml中注册的Servlet的url-pattern
+            data: {},
+            dataType: 'json', //返回数据形式为json
+            success: function (result) {
+              //  alert(result);
+                if (result) {
+                    //初始化xAxis[0]的data
+                    option.xAxis[0].data = [];
+                    for (var i = 0; i < result.length; i++) {
+                        option.xAxis[0].data.push(result[i].spid);
+                    }
+                    //初始化series[0]的data
+                    option.series[0].data = [];
+                    for (var i = 0; i < result.length; i++) {
+                        option.series[0].data.push(result[i].snum);
+                    }
+                }
+            },
+            error: function (errorMsg) {
+                alert("加载数据失败");
+            }
+        });//AJAX
+    }//loadData()
+
+    var myChart = echarts.init(document.getElementById('myDiv2'));
+    var option = {
+        title: {
+            text: '订单按服务统计次数'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+
+        tooltip: {
+            show: true
+        },
+        legend: {
+            data: ['服务总次数']
+        },
+        xAxis: [{
+            type: 'category'
+
+        }],
+        yAxis: [{
+            type: 'value'
+        }],
+        series: [{
+            name: '服务总次数',
+            type: 'line',
+            color: ['rgb(201,125,145)'],
+            data: [],
+
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
+            }
+        },
+
+        ]
+    }
+    //加载数据到option
+    loadData(option);
+    //设置option
+    myChart.setOption(option);
+</script>
+
+
+<script type="text/javascript">
+    <!--这个是折现图-->
+    function loadData(option) {
+        $.ajax({
+            type: 'post',	//传输类型
+            async: false,	//同步执行
+            url: '/index/sumprice',	//web.xml中注册的Servlet的url-pattern
+            data: {},
+            dataType: 'json', //返回数据形式为json
+            success: function (result) {
+                //  alert(result);
+                if (result) {
+                    //初始化xAxis[0]的data
+                    option.xAxis[0].data = [];
+                    for (var i = 0; i < result.length; i++) {
+                        option.xAxis[0].data.push(result[i].prodname);
+                    }
+                    //初始化series[0]的data
+                    option.series[0].data = [];
+                    for (var i = 0; i < result.length; i++) {
+                        option.series[0].data.push(result[i].sprice);
+                    }
+                }
+            },
+            error: function (errorMsg) {
+                alert("加载数据失败");
+            }
+        });//AJAX
+    }//loadData()
+
+    var myChart = echarts.init(document.getElementById('myDiv3'));
+    var option = {
+        title: {
+            text: '订单按服务总金额'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+
+        tooltip: {
+            show: true
+        },
+        legend: {
+            data: ['服务总金额']
+        },
+        xAxis: [{
+            type: 'category'
+
+        }],
+        yAxis: [{
+            type: 'value'
+        }],
+        series: [{
+            name: '服务总金额',
+            type: 'line',
+            color: ['rgb(201,125,145)'],
+            data: [],
+
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
+            }
+        },
+
+        ]
+    }
+    //加载数据到option
+    loadData(option);
+    //设置option
+    myChart.setOption(option);
+</script>
+
+</body>
+</html>

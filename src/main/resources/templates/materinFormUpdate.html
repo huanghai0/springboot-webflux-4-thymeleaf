@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>进货零件更新</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+<div class="contentDiv">
+
+    <legend>
+        <strong>进货零件更新</strong>
+    </legend>
+
+    <form th:action="@{/materin/{action}(action=${action})}" method="post" class="form-horizontal">
+
+        <input type="hidden" name="mid" th:value="${mater.mid}"/>
+        <input type="hidden" name="mname" th:value="${mater.mname}"/>
+        <input type="hidden" name="mtime" th:value="${mater.mtime}"/>
+        <input type="hidden" name="mnum" th:value="${mater.mnum}"/>
+
+        <div class="form-group">
+            <label for="mater_price" class="col-sm-2 control-label">价格:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="mater_price" rows="2" name="introduction"
+                          th:value="${mater.mprice}" th:field="*{mater.mprice}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class="btn btn-primary" type="submit" value="提交"/>&nbsp;&nbsp;
+                <input class="btn" type="button" value="返回" onclick="history.back()"/>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

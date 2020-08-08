@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <!--    <script src="/js/jquery.1.12.4.min.js"></script>-->
+    <script type="text/javascript">
+        function tijiao() {
+            //   debugger;
+            var aid = document.getElementById("account_id").value;
+            var apwd = document.getElementById("account_pwd").value;
+            if (aid == "") {
+                alert("用户名不能为空!");
+                return false;
+            }
+            if (apwd == "") {
+                alert("密码不能为空!");
+                return false;
+            }
+            var span = document.getElementById("myMsg");
+            $.ajax({
+                type: "POST",
+                url: "/index/login/yz",
+                data: "aid=" + aid + "&apwd=" + apwd,
+                success: function (msg) {
+                    if (msg == "1") {
+                        window.location.href = "/index";
+                    } else if (msg == "2") {
+                        span.innerHTML = "用户名或密码错误";
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+<br>
+<br>
+<h3>管理员登录</h3>
+<br>
+
+<form th:action="@{/index/login/yz}" method="post" class="form-horizontal">
+
+    <div class="form-group">
+        <label for="account_id" class="col-sm-2 control-label">帐号:</label>
+        <div class="col-xs-4">
+                <textarea class="form-control" id="account_id" rows="1" name="introduction"
+                          th:value="${account.aid}" th:field="*{account.aid}"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="account_pwd" class="col-sm-2 control-label">密码:</label>
+        <div class="col-xs-4">
+                <input type="password" class="form-control" id="account_pwd" rows="1" name="introduction"
+                          th:value="${account.apwd}" th:field="*{account.apwd}"></input>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input class="btn btn-primary" value="提交" onclick="tijiao()"/>&nbsp;&nbsp;
+            <!--            <input class="btn" type="button" value="返回" onclick="history.back()"/>-->
+            <tr>
+                <td colspan="2" align="center"><span id="myMsg" style="color:red;font-size:8px">${msg}</span></td>
+            </tr>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

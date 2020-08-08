@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.ProductDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Product">
+        <result column="product_id" property="pid" />
+        <result column="product_name" property="pname" />
+        <result column="product_price" property="pprice" />
+        <result column="product_mid" property="pmid" />
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		product_id,product_name,product_price,product_mid
+	</sql>
+
+    <select id="findByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from t_product
+        where product_id = #{pid}
+    </select>
+
+    <select id="findAllProduct" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from t_product
+    </select>
+
+    <insert id="saveProduct" parameterType="Product" useGeneratedKeys="true" keyProperty="pid">
+		insert into
+			t_product(product_id,product_name,product_price,product_mid)
+		values
+			(#{pid},#{pname},#{pprice},#{pmid})
+	</insert>
+
+    <update id="updateProduct" parameterType="Product">
+        update
+        t_product
+        set
+        <if test="pname!=null">
+            product_name = #{pname},
+        </if>
+        <if test="pprice!=null">
+            product_price = #{pprice},
+        </if>
+        <if test="pmid!=null">
+            product_mid = #{pmid}
+        </if>
+        where
+        product_id = #{pid}
+    </update>
+
+    <delete id="deleteProduct" parameterType="java.lang.Integer">
+		delete from
+			t_product
+		where
+			product_id = #{pid}
+	</delete>
+</mapper>

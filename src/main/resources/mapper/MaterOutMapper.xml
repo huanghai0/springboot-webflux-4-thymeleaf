@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.MaterOutDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Mater">
+        <result column="mo_id" property="mid"/>
+        <result column="mo_name" property="mname"/>
+        <result column="mo_time" property="mtime"/>
+        <result column="mo_price" property="mprice"/>
+        <result column="mo_num" property="mnum"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		mo_id,mo_name,mo_time,mo_price,mo_num
+	</sql>
+
+    <select id="findAllMater" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mater_out
+    </select>
+
+    <select id="findMaterByMid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mater_out
+        where mo_id = #{mid}
+    </select>
+
+    <select id="findMaterByMname" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mater_out
+        where mo_name = #{mname}
+    </select>
+
+    <insert id="saveMater" parameterType="Mater" useGeneratedKeys="true" keyProperty="mid">
+		insert into
+			t_mater_out(mo_name,mo_time,mo_price,mo_num)
+		values
+			(#{mname},now(),#{mprice},#{mnum})
+	</insert>
+
+    <update id="updateMater" parameterType="Mater">
+        update
+        t_mater_out
+        set
+        <if test="mname!=null">
+            mo_name = #{mname},
+        </if>
+        <if test="mtime!=null">
+            mo_time = #{mtime},
+        </if>
+        <if test="mprice!=null">
+            mo_price = #{mprice},
+        </if>
+        <if test="mnum != null">
+            mo_num = #{mnum}
+        </if>
+        where
+        mo_id = #{mid}
+    </update>
+
+    <update id="updateMaterNum" parameterType="java.lang.Integer">
+        update
+        t_mater_out
+        set
+        <if test="mnum!= null">
+            mo_num = #{mnum}
+        </if>
+        where
+        mo_id = #{mid}
+    </update>
+
+    <update id="updateMaterSub" parameterType="java.lang.Integer">
+        update
+        t_mater_out
+        set
+            mo_num = mo_num-1
+        where
+        mo_id = #{mid}
+    </update>
+
+    <delete id="deleteMater" parameterType="java.lang.Integer">
+		delete from
+			t_mater_out
+		where
+			mo_id = #{mid}
+	</delete>
+</mapper>

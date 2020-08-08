@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.VipDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Vip">
+        <result column="vip_id" property="vid"/>
+        <result column="vip_name" property="vname"/>
+        <result column="vip_price" property="vprice"/>
+        <result column="vip_dis" property="vdis"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		vip_id,vip_name,vip_price,vip_dis
+	</sql>
+
+    <select id="findVipByVid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_vip
+        where vip_id = #{vid}
+    </select>
+
+    <select id="findAllVip" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_vip
+    </select>
+
+    <insert id="saveVip" parameterType="Vip" useGeneratedKeys="true" keyProperty="vid">
+		insert into
+			t_vip(vip_name,vip_price,vip_dis)
+		values
+			(#{vname},#{vprice},#{vdis})
+	</insert>
+
+    <update id="updateVip" parameterType="Vip">
+        update
+        t_vip
+        set
+        <if test="vname!=null">
+            vip_name = #{vname},
+        </if>
+        <if test="vprice!=null">
+            vip_price = #{vprice},
+        </if>
+        <if test="vdis!=null">
+            vip_dis = #{vdis}
+        </if>
+        where
+        vip_id = #{vid}
+    </update>
+
+    <delete id="deleteVip" parameterType="java.lang.Integer">
+		delete from
+			t_vip
+		where
+			 vip_id = #{vid}
+	</delete>
+</mapper>

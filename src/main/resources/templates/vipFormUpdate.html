@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>会员表更新</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+<div class="contentDiv">
+
+    <legend>
+        <strong>会员表更新</strong>
+    </legend>
+
+    <form th:action="@{/vip/{action}(action=${action})}" method="post" class="form-horizontal">
+
+        <input type="hidden" name="vid" th:value="${vip.vid}"/>
+
+        <div class="form-group">
+            <label for="vip_name" class="col-sm-2 control-label">会员名:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="vip_name" rows="2" name="introduction"
+                          th:value="${vip.vname}" th:field="*{vip.vname}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="mater_price" class="col-sm-2 control-label">会员价格:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="mater_price" rows="2" name="introduction"
+                          th:value="${vip.vprice}" th:field="*{vip.vprice}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vip_dis" class="col-sm-2 control-label">会员折扣:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="vip_dis" rows="2" name="introduction"
+                          th:value="${vip.vdis}" th:field="*{vip.vdis}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class="btn btn-primary" type="submit" value="提交"/>&nbsp;&nbsp;
+                <input class="btn" type="button" value="返回" onclick="history.back()"/>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

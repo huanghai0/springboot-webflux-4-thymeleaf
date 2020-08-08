@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>产品管理</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+<div class="contentDiv">
+
+
+    <legend>
+        <strong>产品管理</strong>
+    </legend>
+
+    <form th:action="@{/product/{action}(action=${action})}" method="post" class="form-horizontal">
+
+        <input type="hidden" name="pid" th:value="${product.pid}"/>
+
+        <div class="form-group">
+            <label for="user_name" class="col-sm-2 control-label">产品名:</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" id="user_name" name="name" th:value="${product.pname}"
+                       th:field="*{product.pname}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="user_sex" class="col-sm-2 control-label">产品价格:</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" id="user_sex" name="writer" th:value="${product.pprice}"
+                       th:field="*{product.pprice}"/>
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <label for="brands" class="col-sm-2 control-label">零件编号:</label>
+            <label th:each="mater:${materList}" class="check-box">
+                <input id="brands" name="brands" type="checkbox" th:value="${mater.mid}" th:text="${mater.mname}"
+                       th:field="*{product.pmid}">
+            </label>
+            <br>
+            <br>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class="btn btn-primary" type="submit" value="提交"/>&nbsp;&nbsp;
+                <input class="btn" type="button" value="返回" onclick="history.back()"/>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

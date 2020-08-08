@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>产品列表</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+<div class="contentDiv">
+
+
+    <table class="table table-hover table-condensed">
+        <legend>
+            <strong>产品列表</strong>
+        </legend>
+        <thead>
+        <tr>
+            <th>产品编号</th>
+            <th>产品名</th>
+            <th>产品价格</th>
+            <th>零件编号</th>
+            <th>删除用户</th>
+            <th>更新用户</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productList}">
+            <th scope="row" th:text="${product.pid}"></th>
+            <td th:text="${product.pname}"></td>
+            <td th:text="${product.pprice}"></td>
+            <td th:text="${product.pmid}"></td>
+
+            <td><a class="btn btn-danger" th:href="@{product/delete/{pid}(pid=${product.pid})}">删除</a>
+            <td><a class="btn btn-danger" th:href="@{product/update/{pid}(pid=${product.pid})}">修改</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div><a class="btn btn-primary" href="product/create" role="button">新增产品</a></div>
+</div>
+
+</body>
+</html>

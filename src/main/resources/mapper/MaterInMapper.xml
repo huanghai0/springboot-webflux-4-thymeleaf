@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.MaterInDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Mater">
+        <result column="mi_id" property="mid"/>
+        <result column="mi_name" property="mname"/>
+        <result column="mi_time" property="mtime"/>
+        <result column="mi_price" property="mprice"/>
+        <result column="mi_num" property="mnum"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		mi_id,mi_name,mi_time,mi_price,mi_num
+	</sql>
+
+    <select id="findAllMater" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mater_in
+    </select>
+
+    <select id="findMaterByMid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mater_in
+        where mi_id = #{mid}
+    </select>
+
+    <insert id="saveMater" parameterType="Mater" useGeneratedKeys="true" keyProperty="mid">
+		insert into
+			t_mater_in(mi_name,mi_time,mi_price,mi_num)
+		values
+			(#{mname},now(),#{mprice},#{mnum})
+	</insert>
+
+    <update id="updateMater" parameterType="Mater">
+        update
+        t_mater_in
+        set
+        <if test="mname!=null">
+            mi_name = #{mname},
+        </if>
+        <if test="mtime!=null">
+            mi_time = #{mtime},
+        </if>
+        <if test="mprice!=null">
+            mi_price = #{mprice},
+        </if>
+        <if test="mnum != null">
+            mi_num = #{mnum}
+        </if>
+        where
+        mi_id = #{mid}
+    </update>
+
+    <delete id="deleteMater" parameterType="java.lang.Integer">
+		delete from
+			t_mater_in
+		where
+			mi_id = #{mid}
+	</delete>
+</mapper>

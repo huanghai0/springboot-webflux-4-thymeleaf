@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.SumOrderDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Sumorder">
+
+        <result column="product_name" property="spid" />
+        <result column="count(product_id)" property="snum" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		order_id,order_time,order_date,order_userphone,order_productid,order_carid,order_stat
+	</sql>
+
+    <select id="sevenDay" resultMap="BaseResultMap" >
+     select product_name ,count(product_id)
+        from t_order join t_product
+        on order_productid=product_id
+        where order_stat = 1
+        group by product_id
+    </select>
+
+</mapper>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js}"></script>
+    <link th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/default.css}" rel="stylesheet"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+    <meta charset="UTF-8"/>
+    <title>订单更新</title>
+</head>
+
+<body>
+<div th:include="bar"></div>
+<div class="contentDiv">
+
+
+    <legend>
+        <strong>订单更新</strong>
+    </legend>
+
+    <form th:action="@{/order/{action}(action=${action})}" method="post" class="form-horizontal">
+
+        <input type="hidden" name="oid" th:value="${order.oid}"/>
+
+        <input type="hidden" name="otime" th:value="${order.otime}"/>
+
+        <input type="hidden" name="ophone" th:value="${order.ophone}"/>
+
+        <div class="form-group">
+            <label for="order_odate" class="col-sm-2 control-label">预定日期:</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" id="order_odate" name="name" th:value="${order.odate}"
+                       th:field="*{order.odate}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_opid" class="col-sm-2 control-label">修理编号:</label>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" id="order_opid" name="writer" th:value="${order.opid}"
+                       th:field="*{order.opid}"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="order_ocid" class="col-sm-2 control-label">汽车编号:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="order_ocid" rows="3" name="introduction"
+                          th:value="${order.ocid}" th:field="*{order.ocid}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="order_ostat" class="col-sm-2 control-label">是否付费:</label>
+            <div class="col-xs-4">
+                <textarea class="form-control" id="order_ostat" rows="3" name="introduction"
+                          th:value="${order.ostat}" th:field="*{order.ostat}"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input class="btn btn-primary" type="submit" value="提交"/>&nbsp;&nbsp;
+                <input class="btn" type="button" value="返回" onclick="history.back()"/>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

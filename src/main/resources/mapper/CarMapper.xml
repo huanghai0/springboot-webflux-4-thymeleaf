@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.CarDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Car">
+        <result column="car_id" property="cid" />
+        <result column="car_number" property="cnumber" />
+        <result column="car_name" property="cname" />
+        <result column="car_userphone" property="cphone" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		car_id,car_number,car_name,car_userphone
+	</sql>
+
+    <select id="findByCid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from t_car
+        where car_id = #{cid}
+    </select>
+
+    <select id="findAllCar" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from t_car
+    </select>
+
+    <select id="findAllCarByCphone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from t_car
+        where car_userphone = #{cphone}
+    </select>
+
+    <insert id="saveCar" parameterType="Car" useGeneratedKeys="true" keyProperty="cid">
+		insert into
+			t_car(car_number,car_name,car_userphone)
+		values
+			(#{cnumber},#{cname},#{cphone})
+	</insert>
+
+    <update id="updateCar" parameterType="Car">
+    update
+    t_car
+    set
+    <if test="cnumber!=null">
+        car_number = #{cnumber},
+    </if>
+    <if test="cname!=null">
+        car_name = #{cname},
+    </if>
+    <if test="cphone!=null">
+        car_userphone = #{cphone}
+    </if>
+    where
+    car_id = #{cid}
+</update>
+
+    <delete id="deleteCar" parameterType="java.lang.Integer">
+		delete from
+			t_car
+		where
+			car_id = #{cid}
+	</delete>
+</mapper>
